@@ -1,5 +1,4 @@
-console.log("start");
-setTimeout(() => {
-    console.log("Process");
-}, 3000);
-console.log(("End"));
+const mymodules = require('./modules/mymodules')
+
+console.log(mymodules.getCurrentTime());
+console.log(mymodules.add(50,100,14));
