@@ -6,20 +6,10 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Hello EJS Templates engine</h1>
-    <h1><%= name %></h1>
-    <h2><%= age %></h2>
-    <h2><%- address %></h2>
-    <hr />
-
-    <% if (age>18){%>
-    <h1>ผ่านเกณฑ์การใช้งาน</h1>
-    <% } else {%>
-    <h1>ไม่ผ่านเกณฑ์การใช้งาน</h1>
-    <% } %>
-
-    <% for(let i = 0 ; i<order; i++){%>
-        <p>ลำดับที่ <%= i %></p>
-    <% } %>
+    <ol>
+        <% for(index in product) {%>
+            <li><%= product[index] %></li>
+        <% } %> 
+    </ol>
   </body>
 </html>
