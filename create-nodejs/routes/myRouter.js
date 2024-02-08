@@ -8,7 +8,13 @@ router.get('/', (req, res) => {
         { name: "พัดลม", price: 200, image: "images/products/product3.png" },
     ]
     res.render('index', { products: products })
+})
 
+router.get('/addForm', (req, res) => {
+    res.render('form')
+})
+router.get('/manage', (req, res) => {
+    res.render('manage')
 })
 
 module.exports = router
