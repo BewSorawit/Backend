@@ -39,7 +39,7 @@
         <% Object.values(products).forEach((item)=> {%>
         <div class="col-lg-4 col-md-6 mb-4">
           <div class="card h-100">
-            <a href="product.html"
+            <a href="/<%= item._id %>"
               ><img class="card-img-top" src="/images/products/<%= item.image %>" alt=""
             /></a>
             <div class="card-body">

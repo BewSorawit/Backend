@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 
 })
 
-router.get('/addForm', (req, res) => {
+router.get('/add-product', (req, res) => {
     res.render('form')
 })
 router.get('/manage', async (req, res) => {
@@ -63,5 +63,18 @@ router.get('/delete/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+router.get('/:id', async (req, res) => {
+    try {
+        const product_id = req.params.id;
+        const product = await Product.findOne({ _id: product_id }).exec();
+        
+        res.render('product', { product: product });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 module.exports = router
