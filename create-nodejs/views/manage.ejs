@@ -48,26 +48,17 @@
           </tr>
         </thead>
         <tbody>
+          <% Object.values(products).forEach((item)=> {%>
           <tr>
-            <td>กระเป๋า</td>
-            <td>500</td>
+            <td><%= item.name %></td>
+            <td><%= item.price %></td>
             <td>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut,
-              recusandae.
+              <%= item.description %>
             </td>
             <td><button class="btn btn-danger">ลบ</button></td>
             <td><button class="btn btn-primary">แก้ไข</button></td>
           </tr>
-          <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut,
-              recusandae.
-            </td>
-            <td><button class="btn btn-danger">ลบ</button></td>
-            <td><button class="btn btn-primary">แก้ไข</button></td>
-          </tr>
+          <% }) %>
         </tbody>
       </table>
     </div>
