@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Product = require('../models/product')
 const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -55,7 +57,19 @@ router.post('/insert', upload.single('image'), async (req, res) => {
 });
 router.get('/delete/:id', async (req, res) => {
     try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+
+        // Delete the associated imasge file
+        const imagePath = path.join(__dirname, '../public/images/products', product.image);
+        fs.unlinkSync(imagePath);
+
+        // Delete the product from the database
         await Product.findByIdAndDelete(req.params.id, { useFindAndModify: false });
+
         // Optionally, you can redirect to the manage page or send a success response.
         res.redirect('/manage');
     } catch (err) {
@@ -68,7 +82,7 @@ router.get('/:id', async (req, res) => {
     try {
         const product_id = req.params.id;
         const product = await Product.findOne({ _id: product_id }).exec();
-        
+
         res.render('product', { product: product });
     } catch (err) {
         console.error(err);
