@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
 router.get('/addForm', (req, res) => {
     res.render('form')
 })
+
 router.get('/manage', async (req, res) => {
     try {
         const products = await Product.find();
@@ -37,6 +38,15 @@ router.get('/manage', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 })
+router.get('/delete/:id', async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id, { useFindAndModify: false });
+        res.redirect('/manage');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 router.post('/insert', upload.single('image'), async (req, res) => {
     try {
