@@ -52,10 +52,10 @@
           <tr>
             <td><%= item.name %></td>
             <td><%= item.price %></td>
+            <td><%= item.description %></td>
             <td>
-              <%= item.description %>
+              <a class="btn btn-danger" href="/delete/<%= item._id %>" onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่')">ลบ</a>
             </td>
-            <td><button class="btn btn-danger">ลบ</button></td>
             <td><button class="btn btn-primary">แก้ไข</button></td>
           </tr>
           <% }) %>

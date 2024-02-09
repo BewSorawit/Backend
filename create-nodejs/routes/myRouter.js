@@ -53,5 +53,15 @@ router.post('/insert', upload.single('image'), async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+router.get('/delete/:id', async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id, { useFindAndModify: false });
+        // Optionally, you can redirect to the manage page or send a success response.
+        res.redirect('/manage');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 module.exports = router
