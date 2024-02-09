@@ -28,11 +28,17 @@ router.get('/', async (req, res) => {
 router.get('/addForm', (req, res) => {
     res.render('form')
 })
-router.get('/manage', (req, res) => {
-    res.render('manage')
+router.get('/manage', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.render('manage', { products: products })
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 })
 
-router.post('/insert',upload.single('image'), async (req, res) => {
+router.post('/insert', upload.single('image'), async (req, res) => {
     try {
         let data = new Product({
             name: req.body.name,
