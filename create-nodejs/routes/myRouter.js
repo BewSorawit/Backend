@@ -1,14 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const product = require('../models/product')
+const Product = require('../models/product')
 
-router.get('/', (req, res) => {
-    const products = [
-        { name: "โน๊ตบุ๊ค", price: 25500, image: "images/products/product1.png" },
-        { name: "เสื้อผ้า", price: 500, image: "images/products/product2.png" },
-        { name: "พัดลม", price: 200, image: "images/products/product3.png" },
-    ]
-    res.render('index', { products: products })
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.render('index', { products: products })
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+
 })
 
 router.get('/addForm', (req, res) => {
@@ -18,8 +20,20 @@ router.get('/manage', (req, res) => {
     res.render('manage')
 })
 
-router.post('/insert', (req, res) => {
-    console.log(req.body.name);
-    res.render('form')
-})
+router.post('/insert', async (req, res) => {
+    try {
+        let data = new Product({
+            name: req.body.name,
+            price: req.body.price,
+            image: req.body.image,
+            description: req.body.description
+        });
+        await data.save();
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = router
