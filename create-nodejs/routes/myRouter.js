@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const product = require('../models/product')
 
 router.get('/', (req, res) => {
     const products = [
@@ -17,7 +18,7 @@ router.get('/manage', (req, res) => {
     res.render('manage')
 })
 
-router.post('/insert',(req,res)=>{
+router.post('/insert', (req, res) => {
     console.log(req.body.name);
     res.render('form')
 })
