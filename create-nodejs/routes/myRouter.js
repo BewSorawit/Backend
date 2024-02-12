@@ -77,6 +77,19 @@ router.get('/delete/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+router.post('/edit', async (req, res) => {
+    try {
+        const edit_id = req.body.edit_id;
+
+        // Use await to wait for the asynchronous operation
+        const doc = await Product.findOne({ _id: edit_id }).exec();
+        res.render('edit',{product:doc})
+        console.log(doc);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 router.get('/:id', async (req, res) => {
     try {
