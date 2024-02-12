@@ -37,7 +37,8 @@
     <div class="container">
       <div class="row my-3">
         <div class="col-md-8 mb-4">
-          <form class="form-horizontal" method="POST">
+          <form class="form-horizontal" method="POST" action="/update">
+            <input type="text" name="update_id" value="<%= product._id %>" >
             <div class="form-group">
               <label class="control-label col-sm-2">ชื่อสินค้า</label>
               <div class="col-sm-10">

@@ -55,6 +55,34 @@ router.post('/insert', upload.single('image'), async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+router.post('/update', async (req, res) => {
+    try {
+        const update_id = req.body.update_id;
+
+        // Check if the product exists
+        const existingProduct = await Product.findById(update_id);
+        if (!existingProduct) {
+            return res.status(404).send('Product not found');
+        }
+
+        // Create a data object with updated information
+        const updatedData = {
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description
+        };
+
+        // Update the product
+        await Product.findByIdAndUpdate(update_id, updatedData, { useFindAndModify: false });
+
+        // Optionally, you can redirect to the product details page or any other desired location
+        res.redirect(`/manage`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.get('/delete/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -83,7 +111,7 @@ router.post('/edit', async (req, res) => {
 
         // Use await to wait for the asynchronous operation
         const doc = await Product.findOne({ _id: edit_id }).exec();
-        res.render('edit',{product:doc})
+        res.render('edit', { product: doc })
         console.log(doc);
     } catch (err) {
         console.error(err);
